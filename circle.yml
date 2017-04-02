@@ -3,6 +3,8 @@ deployment:
     branch: staging
     heroku:
       appname: pumpkin-surprise-81224
+    commands:
+      - heroku run rake db:migrate --app pumpkin-surprise-81224 
   production:
     branch: master
     heroku:
