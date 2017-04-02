@@ -3,13 +3,7 @@ deployment:
     branch: staging
     heroku:
       appname: pumpkin-surprise-81224
-    commands:
-      - heroku run rake db:migrate --app pumpkin-surprise-81224 
-      - heroku run rake db:seed --app pumpkin-surprise-81224
   production:
     branch: master
     heroku:
       appname: jlt-capstone-api
-    commands:
-      - heroku run rake db:migrate --app jlt-capstone-api
-      - heroku run rake db:seed --app jlt-capstone-api
