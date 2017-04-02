@@ -1,5 +1,9 @@
 deployment:
   staging:
-    branch: master
+    branch: staging
     heroku:
       appname: pumpkin-surprise-81224
+  production:
+    branch: master
+    heroku:
+      appname: jlt-capstone-api
