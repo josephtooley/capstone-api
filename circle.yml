@@ -9,3 +9,5 @@ deployment:
     branch: master
     heroku:
       appname: jlt-capstone-api
+    commands:
+      - heroku run rake db:migrate --app jlt-capstone-api
