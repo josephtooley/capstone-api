@@ -91,3 +91,52 @@ gulp.task('css', function() {
   .pipe(sourcemaps.write("./maps"))
   .pipe(gulp.dest(cfg.css.bld)).pipe(debug());
 });
+
+gulp.task("build", sync.sync(["clean:build", ["vendor_css", "vendor_js", "vendor_fonts", "css" ] ] ) );
+
+function browserSyncInit(baseDir, watchFiles) {
+  browserSync.instance = browserSync.init(watchFiles, {
+    server: { baseDir: baseDir },
+    port: 8080,
+    ui: { port: 8090 }
+  });
+};
+
+gulp.task("browserSync", [ "build" ], function() {
+  browserSyncInit(devResourcePath, [
+    cfg.root_html.src,
+    cfg.css.bld + "/**/*.css",
+    cfg.js.src,
+    cfg.html.src,
+  ]);
+});
+
+gulp.task("run", [ "build", "browserSync" ], function () {
+  gulp.watch(cfg.css.src, [ "css" ]);
+});
+
+gulp.task("dist:assets", [ "build" ], function() {
+  return gulp.src(cfg.root_html.src).pipe(debug())
+  .pipe(useref({ searchPath: devResourcePath } ))
+  .pipe(gulpif(["**/*constant.js" ], replace(cfg.apiUrl.dev,cfg.apiUrl.prd)))
+  .pipe(gulpif(["**/*.js"], uglify()))
+  .pipe(gulpif(["**/*.css"], cssMin()))
+  .pipe(gulp.dest(distPath)).pipe(debug());
+});
+
+gulp.task("dist:fonts", function(){
+  return gulp.src(cfg.vendor_fonts.bld + "/**/*", { base: cfg.vendor_css.bld} )
+  .pipe(gulp.dest(distPath));
+});
+
+gulp.task("dist:html", function(){
+  return gulp.src(cfg.html.src).pipe(debug())
+  .pipe(htmlMin( { collapseWhitespace: true } ))
+  .pipe(gulp.dest(distPath)).pipe(debug());
+});
+
+gulp.task("dist", sync.sync( [ "clean:dist", "build", "dist:assets", "dist:fonts", "dist:html" ] ));
+
+gulp.task("dist:run", [ "dist" ], function() {
+  browserSyncInit(distPath);
+});
