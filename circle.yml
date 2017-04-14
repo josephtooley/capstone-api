@@ -1,4 +1,8 @@
 deployment:
+  test:
+    branch: gulp-environment
+    heroku:
+      appname: jlt-capstone-test
   staging:
     branch: staging
     heroku:
