@@ -4,7 +4,7 @@
   angular
     .module("spa-demo")
     .constant("spa-demo.APP_CONFIG", {
-      main_page_html: "<%= asset_path('spa-demo/pages/main.html') %>"
+      main_page_html: "spa-demo/pages/main.html"
     });
 
 })();

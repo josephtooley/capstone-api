@@ -130,8 +130,8 @@ gulp.task("dist:fonts", function(){
 });
 
 gulp.task("dist:html", function(){
-  return gulp.src(cfg.html.src).pipe(debug())
-  .pipe(htmlMin( { collapseWhitespace: true } ))
+  return gulp.src(cfg.html.src, { base: srcPath + "/javascripts"}).pipe(debug())
+  .pipe(htmlMin({ collapseWhitespace: true }))
   .pipe(gulp.dest(distPath)).pipe(debug());
 });
 
