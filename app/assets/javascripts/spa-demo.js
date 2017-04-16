@@ -10,3 +10,4 @@
 //= require spa-demo/app.constant
 //= require spa-demo/foos/foos.module
 //= require spa-demo/foos/foos.service
+//= require spa-demo/foos/foox.controller
