@@ -32,6 +32,18 @@ module CapstoneApi
     Mongoid.load!('./config/mongoid.yml')
     config.generators { |g| g.orm :active_record }
 
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        #origins /https:\/\/\w+\.github\.io/
+        origins /https:\/\/\w+\.github\.io/, /localhost/ 
+
+        resource '*',
+          :headers => :any,
+          :expose => [ 'access-token', 'expiry', 'token--type', 'uid', 'client' ],
+          :methods => [ :get, :post, :put, :delete, :options ]
+      end
+    end
+
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
   end
