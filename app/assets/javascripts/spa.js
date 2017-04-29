@@ -9,3 +9,5 @@
 //= require spa/app.router
 //= require spa/app.constant
 //= require spa/cities/cities.module
+//= require spa/cities/cities.service
+//= require spa/cities/cities.controller
