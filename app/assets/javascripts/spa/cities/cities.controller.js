@@ -3,20 +3,29 @@
 
   angular
     .module("spa.cities")
-    .controller("spa.cities.CityController", CityController);
+    .controller("spa.cities.CitiesController", CitiesController);
 
-  CityController.$inject = [ "spa.cities.City" ];
+  CitiesController.$inject = [ "spa.cities.City" ];
 
-  function CityController(City) {
+  function CitiesController(City) {
     var vm = this;
 
     vm.cities;
     vm.city;
+    vm.edit = edit;
+    vm.create = create;
+    vm.update = update;
+    vm.remove = remove;
 
     activate();
     return;
 
     function activate() {
+      newCity();
+      vm.cities = City.query();
+    }
+
+    function newCity() {
       vm.city = new City();
     }
 
@@ -24,16 +33,34 @@
       console.log(response);
     }
 
-    function edit(object, index) {
+    function edit(object) {
+      vm.city = object;
     }
 
     function create() {
+      vm.city.$save()
+        .then(function(response){
+          console.log(response);
+          vm.cities.push(vm.city);
+          newCity();
+        })
+      .catch(handleError);
     }
 
     function update() {
+      vm.city.$update()
+        .then(function(response){
+        })
+        .catch(handleError);
     }
 
     function remove() {
+      vm.city.$delete()
+        .then(function(response){
+          vm.cities = City.query();
+          newCity();
+        })
+        .catch(handleError);
     }
 
     function removeElement(elements, element) {

@@ -12,7 +12,7 @@
       templateUrl: APP_CONFIG.cities_html,
       replace: true,
       bindToController: true,
-      controller: "spa.cities.CityController",
+      controller: "spa.cities.CitiesController",
       controllerAs: "citiesVM",
       restrict: "E",
       scope: {},
